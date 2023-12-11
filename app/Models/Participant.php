@@ -20,14 +20,14 @@ class Participant extends Authenticatable
         'prenume',
         'poza',
         'email',
-        'parola',
+        'password',
         'telefon',
         // alte câmpuri specifice participantului
     ];
 
     // Atributele care ar trebui ascunse pentru tablourile
     protected $hidden = [
-        'parola', 'remember_token',
+        'password', 'remember_token',
     ];
 
     // Atributele care ar trebui convertite la tipuri native

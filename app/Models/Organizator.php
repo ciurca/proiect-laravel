@@ -18,6 +18,7 @@ class Organizator extends Authenticatable
     // Atributele care pot fi atribuite în masă
     protected $fillable = [
         'email',
+        'username',
         'nume',
         'password',
         'telefon',

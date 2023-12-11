@@ -40,6 +40,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'organizatori' => [
+            'driver' => 'session',
+            'provider' => 'organizatori',
+        ],
+        'participanti' => [
+            'driver' => 'session',
+            'provider' => 'participanti',
+        ],
     ],
 
     /*
@@ -63,6 +71,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'organizatori' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Organizator::class,
+        ],
+        'participanti' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Participant::class,
         ],
 
         // 'users' => [
