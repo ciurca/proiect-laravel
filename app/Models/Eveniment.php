@@ -23,6 +23,10 @@ class Eveniment extends Model
         // alte câmpuri specifice evenimentului
     ];
 
+    protected $casts = [
+        'data_inceput' => 'datetime',
+        'data_sfarsit' => 'datetime'
+    ];
     // Relația cu Organizatorul - presupunem că evenimentul aparține unui singur organizator
     public function organizator()
     {

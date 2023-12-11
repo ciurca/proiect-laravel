@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-class CustomAuthController extends Controller
+class AdminAuthController extends Controller
 {
     public function index()
     {
@@ -20,17 +20,17 @@ class CustomAuthController extends Controller
     public function customLogin(Request $request)
     {
         $request->validate([
-            'email' => 'required',
+            'username' => 'required',
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
         if (Auth::guard('organizatori')->attempt($credentials)) {
-            return redirect()->intended('dashboard')
+            return redirect()->intended('admin/dashboard')
                 ->withSuccess('Signed in');
         }
 
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect("admin/login")->withSuccess('Login details are not valid');
     }
 
     public function registration()
@@ -66,9 +66,11 @@ class CustomAuthController extends Controller
     public function dashboard()
     {
         if(Auth::guard('organizatori')->check()){
-            return view('dashboard');
-        }
+            $organizator = Auth::guard('organizatori')->user();
+            $events = $organizator->events; // Retrieve the events using the defined relationship
 
+            return view('organizator.dashboard', compact('events')); // Pass the events to the view
+        }
         return redirect("login")->withSuccess('You are not allowed to access');
     }
 
@@ -76,6 +78,6 @@ class CustomAuthController extends Controller
         Session::flush();
         Auth::logout();
 
-        return Redirect('login');
+        return Redirect('admin/login');
     }
 }
