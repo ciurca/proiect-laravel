@@ -18,7 +18,6 @@ class Eveniment extends Model
         'descriere',
         'data_inceput',
         'data_sfarsit',
-        'agenda',
         'locatie',
         // alte câmpuri specifice evenimentului
     ];
@@ -51,9 +50,4 @@ class Eveniment extends Model
         return $this->belongsToMany(Colaborator::class, 'contracte', 'eveniment_id', 'colaborator_id');
     }
 
-    // Relația cu Participanți, dacă este necesară
-    // public function participanti()
-    // {
-    //     return $this->hasManyThrough(Participant::class, Bilet::class);
-    // }
 }

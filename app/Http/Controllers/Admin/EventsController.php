@@ -1,85 +1,93 @@
 <?php
 namespace App\Http\Controllers\Admin;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+
 use App\Models\Eveniment;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 class EventsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-//    public function store(Request $request)
-//    {
-//        $request->validate([
-//            'title' => 'required|max:255',
-//            'body' => 'required',
-//        ]);
-//        Post::create($request->all());
-//        return redirect()->route('posts.index')
-//            ->with('success', 'Post created successfully.');
-//    }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-//    public function update(Request $request, $id)
-//    {
-//        $request->validate([
-//            'title' => 'required|max:255',
-//            'body' => 'required',
-//        ]);
-//        $post = Post::find($id);
-//        $post->update($request->all());
-//        return redirect()->route('posts.index')
-//            ->with('success', 'Post updated successfully.');
-//    }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy($id)
+    // ...
+    public function index()
     {
-        $event = Eveniment::find($id);
-        $event->delete();
-        return redirect()->route('admin.dashboard')->with('success', 'Post deleted successfully');
+        $eveniments = Eveniment::where('organizator_id', Auth::id())->get();
+        return view('admin.events.index', compact('eveniments'));
     }
-    // routes functions
-    /**
-     * Show the form for creating a new post.
-     *
-     * @return \Illuminate\Http\Response
-     */
-//    public function create()
-//    {
-//        return view('posts.create');
-//    }
-//    /**
-//     * Display the specified resource.
-//     *
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function show($id)
-//    {
-//        $post = Post::find($id);
-//        return view('posts.show', compact('post'));
-//    }
-    /**
-     * Show the form for editing the specified post.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-//    public function edit($id)
-//    {
-//        $post = Post::find($id);
-//        return view('posts.edit', compact('post'));
-//    }
+
+    public function create()
+    {
+        return view('organizator.events.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'titlu' => 'required',
+            'descriere' => 'required',
+            'data_inceput' => 'required',
+            'data_sfarsit' => 'required',
+            'locatie' => 'required',
+            // validate other fields here
+        ]);
+
+        $eveniment = new Eveniment();
+        $eveniment->titlu = $request->titlu;
+        $eveniment->descriere = $request->descriere;
+        $eveniment->data_inceput = $request->data_inceput;
+        $eveniment->data_sfarsit = $request->data_sfarsit;
+        $eveniment->locatie = $request->locatie;
+        // assign other fields here
+
+        $eveniment->organizator_id = Auth::guard('organizatori')->id();
+        $eveniment->save();
+
+        return redirect()->route('admin.dashboard');
+    }
+
+
+    public function edit(Eveniment $event)
+    {
+        if ($event->organizator_id != Auth::guard('organizatori')->id()) {
+            return redirect()->route('admin.dashboard')->with('error', 'You are not authorized to edit this event.');
+        }
+        return view('organizator.events.edit', compact('event'));
+    }
+
+    public function update(Request $request, Eveniment $event)
+    {
+        if ($event->organizator_id != Auth::guard('organizatori')->id()) {
+            return redirect()->route('admin.dashboard')->with('error', 'You are not authorized to update this event.');
+        }
+        $eveniment = Eveniment::findOrFail($event->id);
+        $request->validate([
+            'titlu' => 'required',
+            'descriere' => 'required',
+            'data_inceput' => 'required',
+            'data_sfarsit' => 'required',
+            'locatie' => 'required',
+            // validate other fields here
+        ]);
+
+        $eveniment->titlu = $request->titlu;
+        $eveniment->descriere = $request->descriere;
+        $eveniment->data_inceput = $request->data_inceput;
+        $eveniment->data_sfarsit = $request->data_sfarsit;
+        $eveniment->locatie = $request->locatie;
+        // assign other fields here
+
+        $eveniment->update();
+
+        return redirect()->route('admin.dashboard');
+    }
+
+    public function destroy(Eveniment $event)
+    {
+        if ($event->organizator_id != Auth::guard('organizatori')->id()) {
+            return redirect()->route('admin.dashboard')->with('error', 'You are not authorized to delete this event.');
+        }
+        $event->delete();
+
+        return redirect()->route('admin.dashboard');
+    }
 }

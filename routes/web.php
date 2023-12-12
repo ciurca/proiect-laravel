@@ -3,17 +3,6 @@
 use App\Http\Controllers\Admin\Auth\AdminAuthController;
 use App\Http\Controllers\Admin\EventsController;
 use Illuminate\Support\Facades\Route;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 
 // Admin/Organizator
 
@@ -27,5 +16,8 @@ Route::post('/admin/custom-login', [AdminAuthController::class, 'customLogin'])-
 Route::get('/admin/signout', [AdminAuthController::class, 'signOut'])->name('signout');
 
 // Events
-// deletes a post
-Route::delete('/events/delete/{post}', [EventsController::class, 'destroy'])->name('events.destroy');
+// Route::delete('/events/delete/{post}', [EventsController::class, 'destroy'])->name('admin.events.destroy');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('events', 'App\Http\Controllers\Admin\EventsController');
+});
+
