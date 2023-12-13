@@ -19,13 +19,16 @@ class Speaker extends Model
         'poza',
         'email',
         'telefon',
+        'created_by'
         // alte câmpuri specifice speakerului
     ];
 
     // Relația cu Evenimente - un speaker poate vorbi la mai multe evenimente
     public function evenimente()
     {
-        return $this->belongsToMany(Eveniment::class, 'event_speaker', 'speaker_id', 'eveniment_id');
+        return $this->belongsToMany(Eveniment::class, 'event_speaker')
+                    ->withPivot('start_time', 'end_time')
+                    ->withTimestamps();
     }
 
 }

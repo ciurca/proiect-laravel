@@ -41,7 +41,8 @@ class Eveniment extends Model
     // Relația cu Speakeri - un eveniment poate avea mai mulți speakeri
     public function speakeri()
     {
-        return $this->belongsToMany(Speaker::class, 'event_speaker', 'eveniment_id', 'speaker_id');
+        return $this->belongsToMany(Speaker::class, 'event_speaker')
+        ->withPivot(['start_time', 'end_time']);
     }
 
     // Relația cu Colaboratori - un eveniment poate avea mai mulți colaboratori

@@ -74,7 +74,7 @@ class EventsController extends Controller
         $eveniment->data_inceput = $request->data_inceput;
         $eveniment->data_sfarsit = $request->data_sfarsit;
         $eveniment->locatie = $request->locatie;
-        // assign other fields here
+
 
         $eveniment->update();
 

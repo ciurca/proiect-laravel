@@ -21,3 +21,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('events', 'App\Http\Controllers\Admin\EventsController');
 });
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('speakers', 'App\Http\Controllers\Admin\SpeakerController');
+});
