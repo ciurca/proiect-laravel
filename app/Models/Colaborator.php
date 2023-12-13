@@ -16,11 +16,10 @@ class Colaborator extends Model
     protected $fillable = [
         'nume',
         'email',
+        'descriere',
+        'poza',
         'telefon',
         'tip', // Tipul de colaborare
-        'suma',
-        'premii',
-        'tip_parteneriat',
         // alte câmpuri specifice colaboratorului
     ];
 
