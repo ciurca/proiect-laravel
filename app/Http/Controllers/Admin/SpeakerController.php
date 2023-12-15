@@ -11,45 +11,71 @@ class SpeakerController extends Controller
 {
     public function index()
     {
-        $speakers = Speaker::all();
-        return view('speakers.index', compact('speakers'));
+        $speakers = Speaker::where('created_by', Auth::guard('organizatori')->id())->get();
+        if (Auth::guard('organizatori')->user()) {
+            return view('organizator.speakers.index', compact('speakers'));
+        } else {
+            return redirect()->route('admin.login');
+        }
     }
 
     public function create()
     {
         $events = Eveniment::all();
-        return view('organizator.speakers.create', compact('events'));
+        if (Auth::guard('organizatori')->user()) {
+            return view('organizator.speakers.create', compact('events'));
+        } else {
+            return redirect()->route('admin.login');
+        }
     }
 
     public function store(Request $request)
     {
-        $speaker = Speaker::create($request->all());
-        $speaker->created_by= Auth::guard('organizatori')->id();
-        $speaker->save();
-
-        $speaker->evenimente()->attach($request->event_id, ['start_time' => $request->start_time, 'end_time' => $request->end_time]);
-
-        return redirect()->route('organizator.speakers.index');
+        if (Auth::guard('organizatori')->user()) {
+            $speaker = new Speaker($request->all());
+            $speaker->created_by = Auth::guard('organizatori')->id();
+            $speaker->save();
+            return redirect()->route('admin.speakers.index');
+        } else {
+            return redirect()->route('admin.login');
+        }
     }
 
+
+    # Editarea speakerilor
     public function edit(Speaker $speaker)
     {
+        if ($speaker->created_by!= Auth::guard('organizatori')->id()) {
+            return redirect()->route('admin.dashboard')->with('error', 'You are not authorized to delete this speaker.');
+        }
         $events = Eveniment::all();
-        return view('speakers.edit', compact('speaker', 'events'));
+        $speakerEvents = $speaker->evenimente;
+        if (Auth::guard('organizatori')->user()) {
+            return view('organizator.speakers.edit', compact('speaker', 'events', 'speakerEvents'));
+        } else {
+            return redirect()->route('admin.login');
+        }
     }
 
     public function update(Request $request, Speaker $speaker)
     {
-        $speaker->update($request->all());
 
-        $speaker->evenimente()->sync([$request->eveniment_id => ['start_time' => $request->start_time, 'end_time' => $request->end_time]]);
+        if (Auth::guard('organizatori')->user()) {
+            $speaker->update($request->all());
+            return redirect()->route('admin.speakers.index');
+        } else {
+            return redirect()->route('admin.login');
+        }
 
-        return redirect()->route('speakers.index');
     }
 
     public function destroy(Speaker $speaker)
     {
+        // verifica daca organizatorul care a creat speakerul este cel care incearca sa il stearga
+        if ($speaker->created_by!= Auth::guard('organizatori')->id()) {
+            return redirect()->route('admin.dashboard')->with('error', 'You are not authorized to delete this speaker.');
+        }
         $speaker->delete();
-        return redirect()->route('speakers.index');
+        return redirect()->route('admin.speakers.index');
     }
 }

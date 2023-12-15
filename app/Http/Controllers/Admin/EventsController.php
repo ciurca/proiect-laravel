@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Auth;
 class EventsController extends Controller
 {
     // ...
-    public function index()
-    {
-        $eveniments = Eveniment::where('organizator_id', Auth::id())->get();
-        return view('admin.events.index', compact('eveniments'));
-    }
+    // public function index()
+    // {
+    //     $eveniments = Eveniment::where('organizator_id', Auth::id())->get();
+    //     return view('admin.dashboard', compact('eveniments'));
+    // }
 
     public function create()
     {

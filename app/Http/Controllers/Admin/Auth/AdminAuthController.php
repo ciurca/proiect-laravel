@@ -67,7 +67,7 @@ class AdminAuthController extends Controller
     {
         if(Auth::guard('organizatori')->check()){
             $organizator = Auth::guard('organizatori')->user();
-            $events = $organizator->events; // Retrieve the events using the defined relationship
+            $events = $organizator->events; 
 
             return view('organizator.dashboard', compact('events')); // Pass the events to the view
         }

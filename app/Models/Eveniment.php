@@ -42,7 +42,7 @@ class Eveniment extends Model
     public function speakeri()
     {
         return $this->belongsToMany(Speaker::class, 'event_speaker')
-        ->withPivot(['start_time', 'end_time']);
+        ->withPivot(['id', 'start_time', 'end_time']);
     }
 
     // Relația cu Colaboratori - un eveniment poate avea mai mulți colaboratori

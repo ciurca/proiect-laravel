@@ -31,6 +31,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                            @guest('organizatori')
+                            @else
+                        <li>
+                            <a class="nav-link" href="{{ route('admin.speakers.index')}}"><i class="fas fa-user-circle"></i> Speakers</a>
+                        </li>
+                            @endguest
 
                     </ul>
 
@@ -40,7 +46,7 @@
                         @guest('organizatori')
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('admin.login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
