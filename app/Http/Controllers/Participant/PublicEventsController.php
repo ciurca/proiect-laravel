@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Participant;
 
 use App\Models\Eveniment;
+use App\Models\Organizator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,19 @@ class PublicEventsController extends Controller
 
         // Pass the event data to the view
         return view('participant.event_summary', ['event' => $event]);
+    }
+    public function organizator($id)
+    {
+        // Fetch the event from the database
+        $organizator = Organizator::with('events')->find($id);
+
+        // Check if the event exists
+        // if (!$event) {
+        //     abort(404, 'Event not found');
+        // }
+
+        // Pass the event data to the view
+        return view('participant.organizator', ['organizator' => $organizator]);
     }
     // public function create()
     // {

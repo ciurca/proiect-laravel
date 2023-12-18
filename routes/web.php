@@ -2,8 +2,12 @@
 
 use App\Http\Controllers\Admin\Auth\AdminAuthController;
 use App\Http\Controllers\Participant\Auth\ParticipantAuthController; // Add this line
+use App\Http\Controllers\Admin\ContractController;
+use App\Http\Controllers\Admin\AgendaController;
 use App\Http\Controllers\Admin\EventsController;
 use App\Http\Controllers\Admin\SpeakerController;
+use App\Http\Controllers\Admin\ColaboratorController;
+use App\Http\Controllers\Admin\BiletController;
 use App\Http\Controllers\Participant\PublicEventsController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,3 +46,20 @@ Route::get('/participant/signout', [ParticipantAuthController::class, 'signOut']
 
 Route::resource('participant', 'App\Http\Controllers\Participant\PublicEventsController');
 Route::get('/participant/event/{id}', [PublicEventsController::class, 'event'])->name('participant.event');
+Route::get('/participant/organizator/{id}', [PublicEventsController::class, 'organizator'])->name('participant.organizator');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('bilet', 'App\Http\Controllers\Admin\BiletController');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('agenda', 'App\Http\Controllers\Admin\AgendaController');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('colaborator', 'App\Http\Controllers\Admin\ColaboratorController');
+});
+
+ Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('contract', 'App\Http\Controllers\Admin\ContractController');
+});

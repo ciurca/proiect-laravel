@@ -7,21 +7,19 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Organizer</th>
-                <th>Number of Speakers</th>
+                <th>Nume</th>
+                <th>Data Inceput</th>
+                <th>Data Sfarsit</th>
+                <th>Organizator</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($events as $event)
                 <tr>
-                    <td>{{ $event->titlu }}</td>
+                    <td><a href="{{ route('participant.event', ['id' => $event->id]) }}">{{ $event->titlu }}</a></td>
                     <td>{{ strftime('%d %B %Y', strtotime($event->data_inceput)) }}</td>
                     <td>{{ strftime('%d %B %Y', strtotime($event->data_sfarsit)) }}</td>
-                    <td>{{ $event->organizator->nume }}</td>
-                    <td>{{ $event->speakeri->count() }}</td>
+                    <td><a href="{{ route('participant.organizator', ['id' => $event->organizator->id]) }}">{{ $event->organizator->nume }}</a></td>
                 </tr>
             @endforeach
         </tbody>

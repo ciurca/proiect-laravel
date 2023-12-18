@@ -48,7 +48,7 @@ class Eveniment extends Model
     // Relația cu Colaboratori - un eveniment poate avea mai mulți colaboratori
     public function colaboratori()
     {
-        return $this->belongsToMany(Colaborator::class, 'contracte', 'eveniment_id', 'colaborator_id');
+        return $this->belongsToMany(Colaborator::class, 'contracts', 'eveniment_id', 'colaborator_id');
     }
 
 }

@@ -12,8 +12,12 @@ class AgendaController extends Controller
     # Vizualizarea tuturor speakerilor asociati
     public function index()
     {
-        $speakers = Speaker::where('created_by', Auth::guard('organizatori')->id())->get();
-        return view('organizator.speakers.agenda', compact('speakers'));
+        if(Auth::guard('organizatori')->check()){
+            $speakers = Speaker::where('created_by', Auth::guard('organizatori')->id())->get();
+            return view('organizator.speakers.agenda', compact('speakers'));
+        } else {
+            return redirect()->route('admin.login');
+        }
     }
     # Crearea agendei (asocierea speakerilor cu evenimentele)
     public function create() 

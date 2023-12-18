@@ -31,12 +31,20 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        @if (Request::is('admin/*'))
                             @guest('organizatori')
                             @else
                         <li>
                             <a class="nav-link" href="{{ route('admin.speakers.index')}}"><i class="fas fa-user-circle"></i> Speakers</a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('admin.colaborator.index')}}"><i class="fas fa-file-contract"></i> Colaboratori</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ route('admin.bilet.index')}}"><i class="fas fa-ticket-alt"></i> Bilete</a>
+                        </li>
                             @endguest
+                            @endif
 
                     </ul>
 
@@ -56,6 +64,7 @@
                                 </li>
                             @endif
                         @else
+                        @if (Request::is('admin/*'))
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::guard('organizatori')->user()->nume}}
@@ -73,6 +82,7 @@
                                     </form>
                                 </div>
                             </li>
+                        @endif
                         @endguest
                         @guest('participanti')
                             @if (Route::has('login'))

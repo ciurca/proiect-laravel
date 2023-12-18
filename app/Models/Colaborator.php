@@ -26,7 +26,7 @@ class Colaborator extends Model
     // Relația cu Evenimente - un colaborator poate lucra cu mai multe evenimente
     public function evenimente()
     {
-        return $this->belongsToMany(Eveniment::class, 'contracte', 'colaborator_id', 'eveniment_id')
-            ->withPivot(['data_semnarii', 'tip']); // Înlocuiește aceste valori cu coloanele reale ale tabelului pivot
+        return $this->belongsToMany(Eveniment::class, 'contracts', 'colaborator_id', 'eveniment_id')
+            ->withPivot(['id']); // Înlocuiește aceste valori cu coloanele reale ale tabelului pivot
     }
 }

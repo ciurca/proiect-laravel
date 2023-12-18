@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
 class Organizator extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -19,6 +18,8 @@ class Organizator extends Authenticatable
     protected $fillable = [
         'email',
         'username',
+        'descriere',
+        'poza',
         'nume',
         'password',
         'telefon',
@@ -45,13 +46,15 @@ class Organizator extends Authenticatable
     // Relația între Organizator și Bilete
     public function tickets()
     {
-        return $this->hasManyThrough(Ticket::class, Event::class);
+        // ...
+
+        return $this->hasManyThrough(Bilet::class, Eveniment::class);
     }
 
     // Relația între Organizator și Speakeri
     public function speakers()
     {
-        return $this->hasManyThrough(Speaker::class, Event::class);
+        return $this->hasManyThrough(Speaker::class, Eveniment::class);
     }
 
     // Relația între Organizator și Colaboratori

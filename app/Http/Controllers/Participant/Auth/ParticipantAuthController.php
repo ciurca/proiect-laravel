@@ -26,7 +26,7 @@ class ParticipantAuthController extends Controller
 
         $credentials = $request->only('username', 'password');
         if (Auth::guard('participanti')->attempt($credentials)) {
-            return redirect()->intended('participant/dashboard')
+            return redirect()->intended('participant/')
                 ->withSuccess('Signed in');
         }
 
