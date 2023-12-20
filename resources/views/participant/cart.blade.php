@@ -29,7 +29,7 @@ src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
                     <td data-th="Product">
                         <div class="row">
                             <div class="col-sm-9">
-                                <h4 class="nomargin">{{ $details['tip'] }}</h4>
+                                <h4 class="nomargin">{{ $details['tip'] }} <span class="h6"><strong>{{ $details['eveniment']}}</strong></span></h4>
                             </div>
                         </div>
                     </td>

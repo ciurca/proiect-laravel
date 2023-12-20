@@ -29,7 +29,7 @@ class ShoppingController extends Controller
         if (!$cart) {
             $cart = [
                 $id => [
-                    "eveniment" => $bilet->eveniment_id,
+                    "eveniment" => $bilet->eveniment->titlu,
                     "tip" => $bilet->tip,
                     "quantity" => 1,
                     "pret" => $bilet->pret,
@@ -44,7 +44,7 @@ class ShoppingController extends Controller
  }
  // daca item nu exista in cos at addaugam la cos cu quantity = 1
  $cart[$id] = [
-    "eveniment" => $bilet->eveniment_id,
+    "eveniment" => $bilet->eveniment->titlu,
     "quantity" => 1,
     "pret" => $bilet->pret,
     "tip" => $bilet->tip,
