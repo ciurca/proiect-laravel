@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\EventsController;
 use App\Http\Controllers\Admin\SpeakerController;
 use App\Http\Controllers\Admin\ColaboratorController;
 use App\Http\Controllers\Admin\BiletController;
+use App\Http\Controllers\Participant\ShoppingController;
 use App\Http\Controllers\Participant\PublicEventsController;
 use Illuminate\Support\Facades\Route;
 
@@ -63,3 +64,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
  Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('contract', 'App\Http\Controllers\Admin\ContractController');
 });
+
+
+Route::patch('update-cart', [ShoppingController::class, 'update']);
+Route::delete('remove-from-cart',[ShoppingController::class, 'remove']);
+
+// Route::get('/', [ShoppingController::class, 'index']); //afisare pagina de start
+Route::get('cart',[ShoppingController::class, 'cart']); //cos
+Route::get('add-to-cart/{id}',[ShoppingController::class, 'addToCart']);//adaug in
+Route::patch('update-cart', [ShoppingController::class, 'update']); //modific cos
+Route::delete('remove-from-cart', [ShoppingController::class, 'remove']);

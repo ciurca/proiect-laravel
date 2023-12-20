@@ -65,15 +65,12 @@
                 </thead>
                 <tbody>
                 @foreach ($event->bilete as $bilet)
-                    <form method="post" action="{{ route('participant.event', ['id' => $bilet->id]) }}">
-                        @csrf
                         <tr>
                             <td>{{ $bilet->tip }}</td>
                             <td>{{ $bilet->pret }} lei</td>
                             <td><input type="text" name="quantity" value="1" size="2" /></td>
-                            <td><input class='btn btn-success' type="submit" value="Cumpara" /></td>
+                            <td><a href="{{ url('add-to-cart/'.$bilet->id) }}" class='btn btn-success'>Cumpara</td>
                         </tr>
-                    </form>
                 @endforeach
                 </tbody>
             </table>
