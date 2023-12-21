@@ -71,7 +71,7 @@ class AdminAuthController extends Controller
 
             return view('organizator.dashboard', compact('events')); // Pass the events to the view
         }
-        return redirect("login")->withSuccess('You are not allowed to access');
+        return redirect("admin/login")->withSuccess('You are not allowed to access');
     }
 
     public function signOut() {

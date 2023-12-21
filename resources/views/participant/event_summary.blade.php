@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="container mt-4">
-    <h2>Detalii eveniment: {{ $event->titlu }}</h2>
-    <h3>Organizator eveniment: <a href="{{ route('participant.organizator', ['id' => $event->organizator->id]) }}">{{ $event->organizator->nume }}</a></h3>
+    <h2>{{ $event->titlu }}</h2>
+    <h5>Organizator: <a href="{{ route('participant.organizator', ['id' => $event->organizator->id]) }}">{{ $event->organizator->nume }}</a></h5>
     <div class="card mb-3">
         <div class="card-body">
-            <h5 class="card-title"><a href="{{ route('participant.event', ['id' => $event->id]) }}">Informatii eveniment</a></h5>
+            <h5 class="card-title">Informatii eveniment</h5>
             <p class="card-text">Descriere: {{ $event->descriere }}</p>
             <p class="card-text">Locatie: {{ $event->locatie }}</p>
             <p class="card-text">Data Inceput: {{ strftime('%d %B %Y', strtotime($event->data_inceput)) }}</p>
@@ -16,7 +16,6 @@
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title"><a href="{{ route('participant.event', ['id' => $event->id]) }}">Agenda</a></h5>
-            <p class="card-text">{{ $event->agenda }}</p>
             <div class="row">
                 @foreach ($event->speakeri as $speaker)
                     <div class="col-md-4">
@@ -35,7 +34,7 @@
     </div>
     <div class="card mb-3">
         <div class="card-body">
-            <h5 class="card-title"><a href="{{ route('participant.event', ['id' => $event->id]) }}">Colaboratori</a></h5>
+            <h5 class="card-title">Colaboratori</h5>
             <div class="row">
                 @foreach ($event->colaboratori as $colaborator)
                     <div class="col-md-4">
@@ -43,17 +42,18 @@
                             <img class="card-img-top mx-auto d-block" style="width: 50%; height: 50%; object-fit: cover;" src="{{ asset($colaborator->poza) }}" alt="Colaborator logo">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $colaborator->nume}}</h5>
+                                <a href="{{ route('participant.colaborator', ['id' => $colaborator->id]) }}" class="card-link">Despre</a></h6>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-            </div>
         </div>
+    </div>
 
     <div class="card mb-3">
         <div class="card-body">
-            <h5><a href="{{ route('participant.event', ['id' => $event->id]) }}">Bilete</a></h5>
+            <h5>Bilete</h5>
             <table class="table">
                 <thead>
                 <tr>

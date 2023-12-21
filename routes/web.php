@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/dashboard', [AdminAuthController::class, 'dashboard'])->name('admin.dashboard');
 
+Route::get('/admin', function () {
+    return redirect('/admin/dashboard');
+});
+
 //Auth Organizator
 Route::get('/admin/login', [AdminAuthController::class, 'index'])->name('admin.login');
 Route::post('/admin/custom-login', [AdminAuthController::class, 'customLogin'])->name('login.custom');
@@ -45,9 +49,13 @@ Route::get('/participant/register', [ParticipantAuthController::class, 'registra
 Route::post('custom-registration', [ParticipantAuthController::class, 'customRegistration'])->name('participant.register.store');
 Route::get('/participant/signout', [ParticipantAuthController::class, 'signOut'])->name('participant.signout');
 
+Route::get('/', function () {
+    return redirect('/participant');
+});
 Route::resource('participant', 'App\Http\Controllers\Participant\PublicEventsController');
 Route::get('/participant/event/{id}', [PublicEventsController::class, 'event'])->name('participant.event');
 Route::get('/participant/organizator/{id}', [PublicEventsController::class, 'organizator'])->name('participant.organizator');
+Route::get('/participant/colaborator/{id}', [PublicEventsController::class, 'colaborator'])->name('participant.colaborator');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('bilet', 'App\Http\Controllers\Admin\BiletController');

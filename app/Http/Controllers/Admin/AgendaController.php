@@ -33,13 +33,14 @@ class AgendaController extends Controller
     {
         $speakerId = $request->get('speaker_id');
         $eventId = $request->get('event_id');
+        $descriere= $request->get('descriere');
         $startTime = $request->get('start_time');
         $endTime = $request->get('end_time');
 
         $speaker = Speaker::find($speakerId);
 
         if ($speaker) {
-            $speaker->evenimente()->attach($eventId, ['start_time' => $startTime, 'end_time' => $endTime]);
+            $speaker->evenimente()->attach($eventId, ['start_time' => $startTime, 'end_time' => $endTime, 'descriere' => $descriere]);
         }
 
         return redirect()->route('admin.agenda.index');
@@ -50,29 +51,31 @@ class AgendaController extends Controller
         $userId = Auth::guard('organizatori')->id();
         $events = Eveniment::where('organizator_id', $userId)->get();
 
-        // Get the first speaker that is associated with the given id in the intersection table
         $speaker = Speaker::where('created_by', $userId)->whereHas('evenimente', function ($query) use ($id) {
             $query->where('event_speaker.id', $id);
         })->first();
+        
+        $descriere = $speaker->evenimente()->wherePivot('id', $id)->first()->pivot->descriere;
 
         if (!$speaker) {
             return redirect()->route('admin.agenda.index');
         }
 
-        return view('organizator.speakers.edit_agenda', compact('events', 'speaker'));
+        return view('organizator.speakers.edit_agenda', compact('events', 'speaker', 'descriere'));
     }
     # Actualizarea agendei in baza de date
     public function update(Request $request, $id)
     {
         $speakerId = $request->get('speaker_id');
         $eventId = $request->get('event_id');
+        $descriere= $request->get('descriere');
         $startTime = $request->get('start_time');
         $endTime = $request->get('end_time');
 
         $speaker = Speaker::find($speakerId);
 
         if ($speaker) {
-            $speaker->evenimente()->sync([$eventId => ['start_time' => $startTime, 'end_time' => $endTime]]);
+            $speaker->evenimente()->sync([$eventId => ['start_time' => $startTime, 'end_time' => $endTime, 'descriere' => $descriere]]);
         }
 
         return redirect()->route('admin.agenda.index');

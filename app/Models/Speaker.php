@@ -27,7 +27,7 @@ class Speaker extends Model
     public function evenimente()
     {
         return $this->belongsToMany(Eveniment::class, 'event_speaker')
-                    ->withPivot('id', 'start_time', 'end_time')
+                    ->withPivot('id', 'start_time', 'end_time', 'descriere')
                     ->withTimestamps();
     }
 

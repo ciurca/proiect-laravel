@@ -84,18 +84,14 @@
                             </li>
                         @endif
                         @endguest
+                        @if (Request::is('participant/*') || Request::is('participant')  )
                         @guest('participanti')
-                            @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('participant.login') }}">{{ __('Login') }}</a>
                                 </li>
-                            @endif
-
-                            @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('participant.register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register-user') }}">{{ __('Register') }}</a>
                                 </li>
-                            @endif
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -115,6 +111,7 @@
                                 </div>
                             </li>
                         @endguest
+                        @endif
                     </ul>
                 </div>
             </div>

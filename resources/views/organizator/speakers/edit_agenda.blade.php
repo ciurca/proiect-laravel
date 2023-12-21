@@ -24,6 +24,10 @@
             </select>
         </div>
         <div class="form-group">
+            <label for="descriere">Descriere Sesiune:</label>
+            <textarea id="descriere" name="descriere" class="form-control" rows="3">{{ $descriere}}</textarea>
+        </div>
+        <div class="form-group">
             <label for="start_time">Start Time</label>
             <input type="datetime-local" id="start_time" name="start_time" class="form-control" value="{{ $speaker->evenimente->first()->pivot->start_time ?? '' }}">
         </div>
