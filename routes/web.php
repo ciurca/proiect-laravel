@@ -56,6 +56,7 @@ Route::resource('participant', 'App\Http\Controllers\Participant\PublicEventsCon
 Route::get('/participant/event/{id}', [PublicEventsController::class, 'event'])->name('participant.event');
 Route::get('/participant/organizator/{id}', [PublicEventsController::class, 'organizator'])->name('participant.organizator');
 Route::get('/participant/colaborator/{id}', [PublicEventsController::class, 'colaborator'])->name('participant.colaborator');
+Route::get('/participant/agenda/{id}', [PublicEventsController::class, 'agenda'])->name('participant.agenda');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('bilet', 'App\Http\Controllers\Admin\BiletController');

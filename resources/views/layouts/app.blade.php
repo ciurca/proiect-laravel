@@ -21,9 +21,16 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+                @if (Request::is('admin/*'))
                 <a class="navbar-brand" href="{{ url(Auth::guard('organizatori')->check() ? '/admin/dashboard' : '/') }}">
                     {{ Auth::guard('organizatori')->check() ? 'Eventify Admin' : config('app.name', 'Eventify') }}
                 </a>
+                @endif
+                @if (Request::is('participant/*') || Request::is('participant'))
+                <a class="navbar-brand" href="{{ url('/')}}">
+                    {{ config('app.name', 'Eventify') }} Participant
+                </a>
+                @endif
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -45,6 +52,14 @@
                         </li>
                             @endguest
                             @endif
+                        @if (Request::is('participant/*') || Request::is('participant'))
+                        @guest('participanti')
+                        @endguest
+                        <li>
+                            <a class="nav-link" href="{{ url('/cart')}}"><i class="fas fa-shopping-cart"></i> Cos</a>
+                        </li>
+                        @endif
+
 
                     </ul>
 
@@ -121,5 +136,12 @@
             @yield('content')
         </main>
     </div>
+    <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+          <li class="nav-item"><a href="{{ route('participant.index') }}" class="nav-link px-2 text-muted">Participant</a></li>
+          <li class="nav-item"><a href="{{ route('admin.dashboard') }}" class="nav-link px-2 text-muted">Admin</a></li>
+        </ul>
+        <p class="text-center text-muted">© 2023 Eventify, Inc</p>
+      </footer>
 </body>
 </html>

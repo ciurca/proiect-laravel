@@ -57,6 +57,7 @@ class AgendaController extends Controller
         
         $descriere = $speaker->evenimente()->wherePivot('id', $id)->first()->pivot->descriere;
 
+
         if (!$speaker) {
             return redirect()->route('admin.agenda.index');
         }

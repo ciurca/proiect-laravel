@@ -15,7 +15,7 @@
     </div>
     <div class="card mb-3">
         <div class="card-body">
-            <h5 class="card-title"><a href="{{ route('participant.event', ['id' => $event->id]) }}">Agenda</a></h5>
+            <h5 class="card-title"><a href="{{ route('participant.agenda', ['id' => $event->id]) }}">Agenda</a></h5>
             <div class="row">
                 @foreach ($event->speakeri as $speaker)
                     <div class="col-md-4">

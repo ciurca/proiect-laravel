@@ -15,7 +15,7 @@
     </div>
         @endif
     <a class="btn btn-info" href="{{ route('admin.speakers.create')}}"><i class="fas fa-user-circle"></i> Creeaza un nou Speaker</a>
-    <a class="btn btn-info" href="{{ route('admin.agenda.create')}}"><i class="fas fa-calendar-plus"></i> Creeaza o Agenda</a>
+    <a class="btn btn-info" href="{{ route('admin.agenda.index')}}"><i class="fas fa-calendar-plus"></i> Creeaza o Agenda</a>
 
     <table class="table">
         <thead>

@@ -31,4 +31,14 @@ class PublicEventsController extends Controller
         $colaborator = Colaborator::with('evenimente')->find($id);
         return view('participant.colaborator', ['colaborator' => $colaborator]);
     }
+    public function agenda($id)
+    {
+        $event = Eveniment::with('speakeri')->find($id);
+
+        if (!$event) {
+            return redirect()->back()->with('error', 'Event not found');
+        }
+
+        return view('participant.agenda', ['event' => $event]);
+    }
 }
